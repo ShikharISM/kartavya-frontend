@@ -3,17 +3,16 @@ import {
     MDBCarouselItem,
 } from 'mdb-react-ui-kit';
 import './Slider.css';
-import slide1 from '../../assets/IMG_20240323_125518.jpg';
-import slide2 from '../../assets/image-k-3.jpg';
-import slide3 from '../../assets/DSC_0105.jpg';
-
+import slide1 from '../../assets/front1.webp';
+import slide2 from '../../assets/image-k-3.webp';
+import slide3 from '../../assets/DSC_0105.webp';
 
 function Slider() {
     const content = {
         "settings": {
-            "interval": "5000",
-            "showIndicators": "true",
-            "touch": "true",
+            "interval": 5000,
+            "showIndicators": true,
+            "touch": true,
             "className": "carousel"
         },
         "items": [
@@ -57,7 +56,7 @@ function Slider() {
                         src={item.img}
                         className="d-block w-100 slider-image"
                         alt={item.alt || `Slide ${index + 1}`}
-                        loading="eager"
+                        loading= {index === 0 ? "eager" : "lazy"}
                     />
                     <div className="carousel-caption">
                         <h2 className="slide-title">{item.title}</h2>
