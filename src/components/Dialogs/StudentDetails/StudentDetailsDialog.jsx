@@ -4,10 +4,10 @@ import './StudentDetailsDialog.css';
 
 const StudentDetailsDialog = ({ open, onClose, student }) => {
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-IN', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
+        return new Date(dateString).toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
         });
     };
 
@@ -23,11 +23,11 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
 
     StatusChip.propTypes = {
         label: PropTypes.string.isRequired,
-        value: PropTypes.bool.isRequired
+        value: PropTypes.bool.isRequired,
     };
 
     const formatCurrency = (amount) => {
-        return amount ? `₹${amount.toLocaleString('en-IN')}` : 'N/A';
+        return amount ? `₹${amount.toLocaleString("en-IN")}` : "N/A";
     };
 
     return (
@@ -38,9 +38,7 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
             maxWidth="md"
             fullWidth
         >
-            <DialogTitle className="dialog-title">
-                Student Details
-            </DialogTitle>
+            <DialogTitle className="dialog-title">Student Details</DialogTitle>
             <DialogContent className="dialog-content">
                 <Box className="content-grid">
                     <Box className="profile-header">
@@ -54,7 +52,8 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                                 <strong>Name:</strong> {student.studentName}
                             </Typography>
                             <Typography variant="body1">
-                                <strong>Roll Number:</strong> {student.rollNumber}
+                                <strong>Roll Number:</strong>{" "}
+                                {student.rollNumber}
                             </Typography>
                             <Typography variant="body1">
                                 <strong>Gender:</strong> {student.gender}
@@ -66,7 +65,8 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                             Personal Information
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Date of Birth:</strong> {formatDate(student.dob)}
+                            <strong>Date of Birth:</strong>{" "}
+                            {formatDate(student.dob)}
                         </Typography>
                         <Typography variant="body1">
                             <strong>Contact:</strong> {student.contactNumber}
@@ -90,11 +90,60 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                             <strong>Centre:</strong> {student.centre}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Current Session:</strong> {student.currentSession}
+                            <strong>Current Session:</strong>{" "}
+                            {student.currentSession}
                         </Typography>
-                        {/* <Typography variant="body1">
-                            <strong>Annual Fees:</strong> {formatCurrency(student.annualFees)}
-                        </Typography> */}
+                    </Box>
+
+                    <Box className="details-section result">
+                        <Typography variant="h6" className="section-title">
+                            Results
+                        </Typography>
+
+                        {student?.result?.length > 0 ? (
+                            student.result.map((res, index) => (
+                                <Box
+                                    key={index}
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        mt: 1.5,
+                                    }}
+                                >
+                                    <Typography variant="body1">
+                                        <strong>{res.session}</strong>
+                                    </Typography>
+
+                                    <Button
+                                        href={res.url}
+                                        target="_blank"
+                                        variant="outlined"
+                                        size="small"
+                                        sx={{
+                                            color: "#1a4d2e",
+                                            borderColor: "#1a4d2e",
+                                            "&:hover": {
+                                                borderColor: "#1a4d2e",
+                                                backgroundColor:
+                                                    "rgba(26, 77, 46, 0.04)",
+                                            },
+                                        }}
+                                    >
+                                        View Result
+                                    </Button>
+                                </Box>
+                            ))
+                        ) : (
+                            <Typography variant="body2" sx={{ mt: 1 }}>
+                                No results are currently available for this
+                                student. For any inquiries, please contact us at{" "}
+                                <strong>
+                                    <a href="mailto:sponsor.kartavya@gmail.com">
+                                        sponsor.kartavya@gmail.com
+                                    </a>
+                                </strong>
+                            </Typography>
+                        )}
                     </Box>
 
                     <Box className="details-section family">
@@ -102,19 +151,24 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                             Family Information
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Father&apos;s Name:</strong> {student.fathersName}
+                            <strong>Father&apos;s Name:</strong>{" "}
+                            {student.fathersName}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Father&apos;s Occupation:</strong> {student.fathersOccupation}
+                            <strong>Father&apos;s Occupation:</strong>{" "}
+                            {student.fathersOccupation}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Mother&apos;s Name:</strong> {student.mothersName}
+                            <strong>Mother&apos;s Name:</strong>{" "}
+                            {student.mothersName}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Mother&apos;s Occupation:</strong> {student.mothersOccupation}
+                            <strong>Mother&apos;s Occupation:</strong>{" "}
+                            {student.mothersOccupation}
                         </Typography>
                         <Typography variant="body1">
-                            <strong>Annual Income:</strong> {formatCurrency(student.annualIncome)}
+                            <strong>Annual Income:</strong>{" "}
+                            {formatCurrency(student.annualIncome)}
                         </Typography>
                     </Box>
 
@@ -123,12 +177,29 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
                             Status & Documents
                         </Typography>
                         <Box className="status-chips">
-                            <StatusChip label={student.activeStatus ? "Active" : "Inactive"} value={student.activeStatus} />
+                            <StatusChip
+                                label={
+                                    student.activeStatus ? "Active" : "Inactive"
+                                }
+                                value={student.activeStatus}
+                            />
                             <StatusChip label="Aadhar" value={student.aadhar} />
-                            <StatusChip label="Domicile" value={student.domicile} />
-                            <StatusChip label="Birth Certificate" value={student.birthCertificate} />
-                            <StatusChip label="Disability" value={student.disability} />
-                            <StatusChip label="Single Parent" value={student.singleParent} />
+                            <StatusChip
+                                label="Domicile"
+                                value={student.domicile}
+                            />
+                            <StatusChip
+                                label="Birth Certificate"
+                                value={student.birthCertificate}
+                            />
+                            <StatusChip
+                                label="Disability"
+                                value={student.disability}
+                            />
+                            <StatusChip
+                                label="Single Parent"
+                                value={student.singleParent}
+                            />
                         </Box>
                         {/* {student.sponsorshipStatus && (
                             <Typography variant="body1" className="sponsorship-info">
@@ -164,6 +235,12 @@ StudentDetailsDialog.propTypes = {
         class: PropTypes.string.isRequired,
         school: PropTypes.string.isRequired,
         centre: PropTypes.string.isRequired,
+        result: PropTypes.shape([
+            {
+                session: PropTypes.string.isRequired,
+                url: PropTypes.string.isRequired,
+            },
+        ]).isRequired,
         address: PropTypes.string.isRequired,
         fathersName: PropTypes.string.isRequired,
         fathersOccupation: PropTypes.string.isRequired,
@@ -180,7 +257,7 @@ StudentDetailsDialog.propTypes = {
         birthCertificate: PropTypes.bool.isRequired,
         disability: PropTypes.bool.isRequired,
         singleParent: PropTypes.bool.isRequired,
-    }).isRequired
+    }).isRequired,
 };
 
 export default StudentDetailsDialog;
