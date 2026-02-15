@@ -1,0 +1,129 @@
+.receipt-container {
+    width: 1050px;
+    margin: 20px auto;
+    padding: 30px 50px;
+    background: white;
+    font-family: "Times New Roman", Times, serif;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.receipt-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.left-info, .right-info {
+    font-size: 19px;
+    line-height: 1.5;
+}
+
+.center-header {
+    width: 400px;
+    text-align: center;
+}
+
+.large-logo {
+    height: 250px;
+    width: 750px;
+    padding-left: 100px;
+    margin-bottom: 10px;
+}
+
+.center-header h1 {
+    font-size: 58px;
+    margin: 0;
+    letter-spacing: 6px;
+    font-weight: normal;
+    line-height: 0.9;
+}
+
+.chapter-info {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 8px 0 2px 0;
+}
+
+.reg-act {
+    font-size: 11px;
+    margin: 0;
+}
+
+.right-info {
+    text-align: right;
+}
+
+.receipt-title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 15px 0;
+    padding-top: 10px;
+    border-top: 1px solid black;
+}
+
+.receipt-body {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.meta-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.field-row {
+    margin: 12px 0;
+    display: flex;
+    align-items: baseline;
+    border-bottom: 1px dotted #555;
+    padding-bottom: 2px;
+}
+
+.field-row span {
+    padding-left: 12px;
+}
+
+.amount-email-row {
+    display: flex;
+    gap: 30px;
+}
+
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+.no-border { border: none !important; }
+
+.signature-section {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.signature-section img {
+    height: 65px;
+    margin-right: 25px;
+}
+
+.signature-section p {
+    border-top: 1px solid black;
+    width: 180px;
+    text-align: center;
+    padding-top: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.download-btn {
+    margin: 20px auto 0 auto;
+    padding: 8px 16px;
+    background: #155879;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

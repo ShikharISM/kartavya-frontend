@@ -25,6 +25,7 @@ import EditProfileDialog from '../../../components/Dialogs/EditProfileDialog/Edi
 import ChangeEmailDialog from '../../../components/Dialogs/ChangeEmailDialog/ChangeEmailDialog';
 import StudentDetailsDialog from '../../../components/Dialogs/StudentDetails/StudentDetailsDialog';
 import './Profile.css'
+import ReceiptPreview from '../../../components/Dialogs/ReceiptDetailsDialog/ReceiptPreview';
 
 export default function Profile() {
     const [loading, setLoading] = useState(false);
@@ -36,6 +37,8 @@ export default function Profile() {
     const [initialLoad, setInitialLoad] = useState(true);
     const [emailDialogOpen, setEmailDialogOpen] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [selectedDonation, setSelectedDonation] = useState(null);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
     const handleOpenDialog = () => {
         setDialogOpen(true);
@@ -56,6 +59,19 @@ export default function Profile() {
     const handleCloseEmailDialog = () => setEmailDialogOpen(false);
     const handleOpenStudentDialog = (student) => setSelectedStudent(student);
     const handleCloseStudentDialog = () => setSelectedStudent(null);
+
+    const handleReceiptClick = (donation) => {
+        if (donation.receiptNumber) {
+            setSelectedDonation(donation);
+            setIsPreviewOpen(true);
+        }
+        else if (donation.recieptUrl) {
+            window.open(donation.recieptUrl, '_blank');
+        }
+        else {
+            alert('Receipt not available for this donation.');
+        }
+    }
 
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
@@ -263,18 +279,21 @@ export default function Profile() {
                                                         <TableCell>₹{donation.amount}</TableCell>
                                                         <TableCell>{formatDate(donation.donationDate)}</TableCell>
                                                         <TableCell>
-                                                            {donation.recieptUrl ? (
-                                                                <Link
-                                                                    href={donation.recieptUrl}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="reciept-link"
-                                                                >
-                                                                    View Reciept
-                                                                </Link>
-                                                            ) : (
-                                                                'Not Available'
-                                                            )}
+                                                            <Link
+                                                                component="button"
+                                                                onClick={() => handleReceiptClick(donation)}
+                                                                className="student-link"
+                                                                sx={{
+                                                                    textDecoration: 'none',
+                                                                    color: 'primary.main',
+                                                                    '&:hover': {
+                                                                        textDecoration: 'underline',
+                                                                        cursor: 'pointer'
+                                                                    }
+                                                                }}
+                                                            >
+                                                                View Receipt 
+                                                            </Link>
                                                         </TableCell>
                                                     </TableRow>
                                                 ))}
@@ -403,6 +422,11 @@ export default function Profile() {
                 onClose={handleCloseStudentDialog}
                 student={selectedStudent || {}}
             />
+            <ReceiptPreview 
+                donation={selectedDonation} 
+                open={isPreviewOpen} 
+                onClose={() => setIsPreviewOpen(false)} 
+            />
         </Box>
-    );
+    );    
 }
