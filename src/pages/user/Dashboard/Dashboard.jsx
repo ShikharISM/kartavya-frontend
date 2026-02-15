@@ -18,6 +18,8 @@ import {
     Avatar
 } from '@mui/material';
 
+import ReceiptPreview from '../../../components/Dialogs/ReceiptDetailsDialog/ReceiptPreview.jsx';
+
 import { DeleteOutlineOutlined as DeleteIcon } from '@mui/icons-material';
 import { PictureAsPdf, InsertDriveFile } from '@mui/icons-material';
 import StudentDetailsDialog from '../../../components/Dialogs/StudentDetails/StudentDetailsDialog';
@@ -45,6 +47,8 @@ const Dashboard = () => {
     const [selectedForDelete, setSelectedForDelete] = useState(null);
     const [deleting, setDeleting] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [receiptDonation, setReceiptDonation] = useState(null);
+
 
     const handleOpenStudentDialog = (student) => setSelectedStudent(student);
     const handleCloseStudentDialog = () => setSelectedStudent(null);
@@ -342,19 +346,35 @@ const Dashboard = () => {
                                                 >
                                                     Close
                                                 </Button>
-                                                {selectedDonation.recieptUrl && (
+
+                                                {selectedDonation.verified && (
                                                     <Button
-                                                        href={selectedDonation.recieptUrl}
-                                                        target="_blank"
+                                                        variant="contained"
                                                         className="submit-button"
+                                                        onClick={() => {
+                                                            if (selectedDonation.receiptNumber) {
+                                                                setReceiptDonation(selectedDonation);   // open generated receipt
+                                                            } else if (selectedDonation.recieptUrl) {
+                                                                window.open(selectedDonation.recieptUrl, "_blank"); // open uploaded screenshot
+                                                            }
+                                                            handleCloseDialog();
+                                                        }}
                                                     >
                                                         View Receipt
                                                     </Button>
                                                 )}
+
                                             </DialogActions>
+
                                         </>
                                     )}
                                 </Dialog>
+
+                                <ReceiptPreview
+                                    open={!!receiptDonation}
+                                    donation={receiptDonation}
+                                    onClose={() => setReceiptDonation(null)}
+                                />
                             </Stack>
                         </Paper>
 
@@ -418,11 +438,13 @@ const Dashboard = () => {
                                     </Typography>
                                 )}
                             </Stack>
-                            <StudentDetailsDialog
-                                open={Boolean(selectedStudent)}
-                                onClose={handleCloseStudentDialog}
-                                student={selectedStudent || {}}
-                            />
+                            {selectedStudent && (
+                                <StudentDetailsDialog
+                                    open={true}
+                                    onClose={handleCloseStudentDialog}
+                                    student={selectedStudent}
+                                />
+                            )}
                         </Paper>
 
                         <Paper className="user-documents">
