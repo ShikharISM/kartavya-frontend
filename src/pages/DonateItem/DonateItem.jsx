@@ -8,7 +8,7 @@ import { fetchContent } from '../../helper/contentFetcher';
 import { API_URL } from '../../config';
 import './DonateItem.css';
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/donateItem.json";
+const CONTENT_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/donateItem.json";
 
 export default function DonateItem() {
     const [content, setContent] = useState(null);

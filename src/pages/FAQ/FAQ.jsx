@@ -5,7 +5,7 @@ import { fetchContent } from '../../helper/contentFetcher';
 import { CircularProgress, Alert } from '@mui/material';
 import './FAQ.css';
 
-const FAQ_URL = 'https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/faq.json';
+const FAQ_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/faq.json";
 const FAQ = () => {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);

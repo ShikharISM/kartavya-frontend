@@ -3,7 +3,7 @@ import { Container, Typography, Paper, Stack, Box, CircularProgress, Alert } fro
 import { fetchContent } from '../../helper/contentFetcher';
 import "./AboutMission.css";
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/aboutMission.json";
+const CONTENT_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/aboutMission.json";
 
 const AboutMission = () => {
     const [content, setContent] = useState(null);
