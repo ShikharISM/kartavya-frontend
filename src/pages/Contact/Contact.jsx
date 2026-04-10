@@ -9,7 +9,7 @@ import { fetchContent } from '../../helper/contentFetcher';
 import './Contact.css';
 import { API_URL } from '../../config';
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/contact.json";
+const CONTENT_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/contact.json";
 
 const Contact = () => {
     const [content, setContent] = useState(null);

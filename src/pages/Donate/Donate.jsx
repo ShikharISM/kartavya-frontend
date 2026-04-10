@@ -11,7 +11,7 @@ import { API_URL } from '../../config';
 import qr from "../../assets/qr.png"
 import './Donate.css';
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/donate.json";
+const CONTENT_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/donate.json";
 
 export default function DonationForm() {
     const [content, setContent] = useState(null);

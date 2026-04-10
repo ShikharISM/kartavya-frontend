@@ -131,11 +131,11 @@ export default function Footer() {
                             </p>
                             <p>
 
-                                <a href="mailto:sponsor.kartavya@gmail.com"><MDBIcon color="secondary" icon="envelope" className="me-3" />sponsor.kartavya@gmail.com</a>
+                                <a href="mailto:sponsor.kartavya@gmail.com"><MDBIcon color="secondary" icon="envelope" className="me-3" />sponsor@kartavya.org</a>
                             </p>
                             <p>
                                 <MDBIcon color="secondary" icon="phone" className="me-3" />
-                                +917264822356
+                                +916386914190
                             </p>
 
                         </MDBCol>

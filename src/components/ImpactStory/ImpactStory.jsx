@@ -5,7 +5,7 @@ import { fetchContent } from '../../helper/contentFetcher';
 import "./ImpactStory.css";
 import founderImg from "/src/assets/amreshmishra.webp"
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/impactStory.json";
+const CONTENT_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/impactStory.json";
 
 const ImpactStory = () => {
     const [content, setContent] = useState(null);

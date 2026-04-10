@@ -6,7 +6,7 @@ import { fetchContent } from '../../helper/contentFetcher';
 import { Timeline } from 'react-twitter-widgets';
 import "./works.css";
 
-const CONTENT_URL = "https://raw.githubusercontent.com/kartavya-iitism/kartavya-frontend-content/refs/heads/main/works.json";
+const CONTENT_URL = "https://cdn.jsdelivr.net/gh/kartavya-iitism/kartavya-frontend-content@main/works.json";
 
 const Works = () => {
     const [content, setContent] = useState(null);
