@@ -6,6 +6,7 @@ import {
 import axios from 'axios';
 import ConfirmDialog from '../../components/Dialogs/ConfirmDialog/ConfirmDialog';
 import DateField from '../../components/DateField/DateField';
+import StudentDetailsDialog from '../../components/Dialogs/StudentDetails/StudentDetailsDialog';
 import { fetchContent } from '../../helper/contentFetcher';
 import { API_URL } from '../../config';
 import qr from "../../assets/qr.png"
@@ -17,6 +18,9 @@ export default function RedonateForm() {
   const [content, setContent] = useState(null);
   const [pageLoading, setPageLoading] = useState(true);
   const [pageError, setPageError] = useState(null);
+
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
   const today = new Date().toISOString().split('T')[0];
   const storedUserInit = (() => {
     try {
@@ -26,6 +30,8 @@ export default function RedonateForm() {
     }
   })();
 
+  const handleOpenStudentDialog = (student) => setSelectedStudent(student);
+  const handleCloseStudentDialog = () => setSelectedStudent(null);
   const currentYear = new Date().getFullYear();
   const currentAcademicYear = `${currentYear}-${(currentYear + 1).toString().slice(-2)}`;
   const nextYear = currentYear + 1;
@@ -262,13 +268,22 @@ export default function RedonateForm() {
         {/* Sponsored Students */}
         {sponsoredStudents && sponsoredStudents.length > 0 && (
           <Paper elevation={3} className="sponsored-students-section" style={{ marginBottom: '30px', padding: '20px' }}>
-            <Typography variant="h5" style={{ marginBottom: '15px', fontWeight: 'bold' }}>
+            <Typography variant="h5" style={{ marginBottom: '15px', fontFamily:"Playfair Display", fontWeight:"bold", color: "#1a4d2e"}}>
               Your Sponsored Students ({sponsoredStudents.length})
             </Typography>
             <Grid container spacing={2}>
               {(showAllStudents ? sponsoredStudents : sponsoredStudents.slice(0, 3)).map((student, index) => (
                 <Grid item xs={12} sm={6} md={4} key={student._id || `student-${index}`}>
-                  <Card style={{ height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+                  <Card style={{ height: '100%', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} sx={{
+                    height: '100%',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      transform: 'scale(1.02)',
+                      boxShadow: 3
+                    }
+                  }} onClick={() => handleOpenStudentDialog(student)}>
                     <CardContent>
                       <div
                         style={{
@@ -304,9 +319,7 @@ export default function RedonateForm() {
                       <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '8px' }}>
                         {student.studentName}
                       </Typography>
-                      <Typography variant="body2" color="textSecondary" style={{ marginBottom: '5px' }}>
-                        <strong>Roll Number:</strong> {student.rollNumber}
-                      </Typography>
+
                       <Typography variant="body2" color="textSecondary" style={{ marginBottom: '5px' }}>
                         <strong>Class:</strong> {student.class || 'N/A'}
                       </Typography>
@@ -319,17 +332,7 @@ export default function RedonateForm() {
                       <Typography variant="body2" color="textSecondary" style={{ marginBottom: '5px' }}>
                         <strong>Gender:</strong> {student.gender}
                       </Typography>
-                      <Typography variant="body2" color="textSecondary" style={{ marginBottom: '5px' }}>
-                        <strong>Father's Name:</strong> {student.fathersName}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" style={{ marginBottom: '10px' }}>
-                        <strong>Contact:</strong> {student.contactNumber}
-                      </Typography>
-                      <Chip
-                        label={student.sponsorshipStatus ? 'Actively Sponsored' : 'Inactive'}
-                        color={student.sponsorshipStatus ? 'success' : 'default'}
-                        size="small"
-                      />
+
                     </CardContent>
                   </Card>
                 </Grid>
@@ -379,7 +382,7 @@ export default function RedonateForm() {
         {localStorage.token && (
           <Alert severity="info" style={{ marginTop: '30px', marginBottom: '20px' }}>
             <Typography variant="body2">
-              <strong>Re-Donation:</strong> Your form has been pre-filled with your previous donation details and sponsored students information.
+              <strong>Renewal:</strong> Your form has been pre-filled with your previous donation details and sponsored students information.
               You can modify the amount and other details as needed. Thank you for your continued support!
             </Typography>
           </Alert>
@@ -507,7 +510,7 @@ export default function RedonateForm() {
                   <CircularProgress size={24} className="button-loader" />
                 </>
               ) : (
-                'Complete Re-Donation'
+                'Complete Renewal'
               )}
             </Button>
 
@@ -542,6 +545,14 @@ export default function RedonateForm() {
         warningMessage={(parseInt(formData.numChild) || 0) < sponsoredStudents.length ? 'You are reducing the number of children you sponsor. This will affect their education. Please provide a reason.' : null}
         onReasonChange={(reason) => setformData({ ...formData, reductionReason: reason })}
       />
+
+      <StudentDetailsDialog
+        open={Boolean(selectedStudent)}
+        onClose={handleCloseStudentDialog}
+        student={selectedStudent || {}}
+      />
+
     </div>
   );
+
 }
