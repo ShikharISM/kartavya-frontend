@@ -166,6 +166,8 @@ const Dashboard = () => {
         }
     ];
 
+    const hasPreviousDonation = userStats.totalDonations > 0;
+
     return (
         <Box className="dashboard-container">
             <Container maxWidth="lg">
@@ -208,49 +210,51 @@ const Dashboard = () => {
                             ))}
                         </Stack>
 
-                        <Stack
-                            direction={{ xs: 'column', md: 'row' }}
-                            spacing={4}
-                            className="dashboard-actions"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{
-                                width: '100%',
-                                margin: '0 auto'
-                            }}
-                        >
-                            <Paper className="action-card profile-card">
-                                <Typography variant="h4" className="card-title">
-                                    Make a New Donation
-                                </Typography>
-                                <Typography variant="body1" className="card-content">
-                                    Continue supporting our mission to educate and empower
-                                </Typography>
-                                <Button
-                                    component={Link}
-                                    to="/donate"
-                                    className="action-button donate-button"
-                                >
-                                    Donate Now
-                                </Button>
-                            </Paper>
+                {/* Donate + Profile */}
+                <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    spacing={4}
+                    justifyContent="center"
+                    alignItems="stretch"
+                    className="dashboard-actions"
+                >
+                    <Paper className="action-card profile-card">
+                        <Box>
+                            <Typography variant="h4" className="card-title">Make a New Donation</Typography>
+                            <Typography variant="body1" className="card-content">
+                                Continue supporting children's education
+                            </Typography>
+                        </Box>
 
-                            <Paper className="action-card profile-card">
-                                <Typography variant="h4" className="card-title">
-                                    Your Profile
-                                </Typography>
-                                <Typography variant="body1" className="card-content">
-                                    View and update your account details
-                                </Typography>
-                                <Button
-                                    component={Link}
-                                    to="/user/profile"
-                                    className="action-button profile-button"
-                                >
-                                    View Profile
-                                </Button>
-                            </Paper>
-                        </Stack>
+                        {hasPreviousDonation ? (
+                            <Button component={Link} to="/redonate" className="action-button donate-button">
+                                Renewal Now
+                            </Button>
+                        ) : (
+                            <Button component={Link} to="/donate" className="action-button donate-button">
+                                Donate Now
+                            </Button>
+                        )}
+                    </Paper>
+
+                    <Paper className="action-card profile-card">
+                        <Box>
+                            <Typography variant="h4" className="card-title">
+                                Your Profile
+                            </Typography>
+                            <Typography variant="body1" className="card-content">
+                                View and update your account details
+                            </Typography>
+                        </Box>
+                        <Button
+                            component={Link}
+                            to="/user/profile"
+                            className="action-button profile-button"
+                        >
+                            View Profile
+                        </Button>
+                    </Paper>
+                </Stack>
 
                         <Paper className="recent-donations">
                             <Typography variant="h4" className="section-title">
@@ -446,7 +450,7 @@ const Dashboard = () => {
                                 />
                             )}
                         </Paper>
-
+                        
                         <Paper className="user-documents">
                             <Typography variant="h4" className="section-title">
                                 Documents

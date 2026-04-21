@@ -1,17 +1,17 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, CircularProgress } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, CircularProgress, Alert, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import './ConfirmDialog.css';
 
-const ConfirmDialog = ({ open, onClose, onConfirm, formData, amount, loading }) => {
+const ConfirmDialog = ({ open, onClose, onConfirm, formData, amount, loading, warningMessage, onReasonChange }) => {
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            className="confirm-dialog"
-        >
-            <DialogTitle className="dialog-title">
-                Confirm Donation Details
-            </DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      className="confirm-dialog"
+    >
+      <DialogTitle className="dialog-title" sx={{ backgroundColor: '#1b4d2e', color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
+        Confirm Donation Details
+      </DialogTitle>
             <DialogContent className="dialog-content">
                 <Typography variant="body1">
                     <strong>Name:</strong> {formData.name}
@@ -30,6 +30,9 @@ const ConfirmDialog = ({ open, onClose, onConfirm, formData, amount, loading }) 
                     }) : ''}
                 </Typography>
                 <Typography variant="body1">
+                    <strong>Academic Year:</strong> {formData.academicYear}
+                </Typography>
+                <Typography variant="body1">
                     <strong>Number of Children:</strong> {formData.numChild || 0}
                 </Typography>
                 <Typography variant="body1">
@@ -41,6 +44,25 @@ const ConfirmDialog = ({ open, onClose, onConfirm, formData, amount, loading }) 
                 <Typography variant="h6" className="total-amount">
                     <strong>Total Amount:</strong> ₹{parseInt(formData.amount || 0).toLocaleString('en-IN')}
                 </Typography>
+
+                {warningMessage && (
+                    <>
+                        <Alert severity="warning" sx={{ mt: 2 }}>
+                            {warningMessage}
+                        </Alert>
+                        <TextField
+                            label="Reason for reduction (Optional)"
+                            multiline
+                            rows={3}
+                            fullWidth
+                            variant="outlined"
+                            sx={{ mt: 2 }}
+                            value={formData.reductionReason || ''}
+                            onChange={(e) => onReasonChange(e.target.value)}
+                            placeholder="Please let us know why you are reducing the sponsorship amount. This helps us understand and improve."
+                        />
+                    </>
+                )}
             </DialogContent>
             <DialogActions className="dialog-actions">
                 <Button
@@ -76,12 +98,14 @@ ConfirmDialog.propTypes = {
         email: PropTypes.string,
         contactNumber: PropTypes.string,
         donationDate: PropTypes.string,
-        numChild: PropTypes.string,
-        extamount: PropTypes.string,
-        amount: PropTypes.string
+        numChild: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        extamount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     }).isRequired,
-    amount: PropTypes.string.isRequired,
-    loading: PropTypes.bool.isRequired
+    amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    loading: PropTypes.bool.isRequired,
+    warningMessage: PropTypes.string,
+    onReasonChange: PropTypes.func
 };
 
 export default ConfirmDialog;
