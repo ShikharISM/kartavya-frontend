@@ -11,7 +11,7 @@ const StudentDetailsDialog = ({ open, onClose, student }) => {
         });
     };
 
-    const StatusChip = ({ label, value }) => (
+    const StatusChip = ({ label, value = false }) => (
         <Chip
             label={label}
             color={value ? "success" : "error"}
